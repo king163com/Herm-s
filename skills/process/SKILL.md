@@ -43,6 +43,14 @@ process(action="wait", session_id="abc123", timeout=60)
 process(action="kill", session_id="abc123")
 ```
 
+## Error Handling & Retry
+
+If a process action fails (poll, wait, log):
+1. If timeout error: retry once after 2s, then again after 4s
+2. If connection error: verify the process still exists with `process(action="list")` first
+3. If process is stuck: try `process(action="kill")` and restart if needed
+4. Log errors with session_id for debugging
+
 ## Anti-patterns
 
 - Not calling process(action="list") before trying to poll/kill
