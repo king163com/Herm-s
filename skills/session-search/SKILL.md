@@ -44,6 +44,13 @@ session_search()  # no args = chronological browse
 session_search(session_id="abc123", around_message_id=last_id, window=5)
 ```
 
+## Error Handling & Retry
+
+If a query fails with timeout or connection error:
+1. Wait 2 seconds, then retry up to 3 times with exponential backoff (2s → 4s → 8s)
+2. If all retries fail, return a clear error message suggesting the user try a simpler query
+3. Log the error: `session_search(query="...", error="timeout")` for later analysis
+
 ## Anti-patterns
 
 - Using session_search for current data → use direct tools instead
