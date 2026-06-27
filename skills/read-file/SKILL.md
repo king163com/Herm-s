@@ -47,6 +47,14 @@ read_file(path="/var/log/app.log", offset=501, limit=500) # second page
 read_file(path="/path/to/file", offset=100, limit=50)
 ```
 
+## Error Handling
+
+If read_file fails (file not found, permission denied, encoding error):
+1. Check if the path exists with `realpath` or `ls` via terminal
+2. If file not found: suggest checking the path, try `~/` expansion
+3. If encoding error: note the file may be binary, suggest using `file` command to check type
+4. Log the error clearly with the failed path for debugging
+
 ## Anti-patterns
 
 - Using terminal + cat to read files → use read_file instead
