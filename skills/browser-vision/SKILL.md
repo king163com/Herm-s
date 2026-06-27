@@ -40,6 +40,14 @@ browser_vision(question="Describe the login form layout", annotate=True)
 browser_vision(question="What characters do you see in this CAPTCHA?")
 ```
 
+## Error Handling
+
+If browser_vision fails (screenshot unavailable, page not loaded):
+1. Verify the page is loaded with `browser_snapshot()` first
+2. If page navigation is needed: call `browser_navigate()` with the URL
+3. If screenshot still fails: fall back to `browser_snapshot()` for text content
+4. For CAPTCHA: if vision fails, try describing what the text snapshot shows as a fallback
+
 ## Anti-patterns
 
 - Using browser_vision for simple text content → use browser_snapshot instead
