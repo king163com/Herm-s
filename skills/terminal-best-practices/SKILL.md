@@ -32,8 +32,9 @@ Robust terminal command execution with proper error handling for Hermes Agent on
 | `command not found` | Use full path or `which` to find it first |
 | `Permission denied` | Check `ls -la` and use `chmod` if needed |
 | `No such file or directory` | Use `realpath` or `readlink -f` to resolve symlinks |
-| Timeout | Set `timeout=N` parameter (seconds) |
+| Timeout | Set `timeout=N` parameter (seconds); if it times out, retry up to 3 times with 2x backoff (5s → 10s → 20s) |
 | Path with spaces | Always quote: `"$var"` or `path/to/'My Documents'` |
+| Connection/host error | Retry with exponential backoff (2s → 4s → 8s); check network connectivity |
 
 ### Long-Running Commands
 
